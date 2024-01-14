@@ -1,28 +1,28 @@
+from logger import timing_decorator
+import time
+
 class Market:
+
+    drinks = {}
+
     def __init__(self, wines: list = None, beers: list = None) -> None:
-        pass
+        if wines:
+            self.drinks.update({wine.title: wine for wine in wines})
+        if beers:
+            self.drinks.update({beer.title: beer for beer in beers})
 
+    @timing_decorator
     def has_drink_with_title(self, title=None) -> bool:
-        """
-        Проверяет наличие напитка в магазине за О(1)
+        return title in self.drinks
 
-        :param title:
-        :return: True|False
-        """
-        pass
-
+    @timing_decorator
     def get_drinks_sorted_by_title(self) -> list:
-        """
-        Метод получения списка напитков (вина и пива) отсортированных по title
+        return sorted(self.drinks.values(), key=lambda drink: drink.title)
 
-        :return: list
-        """
-        pass
-
+    @timing_decorator
     def get_drinks_by_production_date(self, from_date=None, to_date=None) -> list:
-        """
-        Метод получения списка напитков в указанном диапазоне дат: с from_date по to_date
-
-        :return: list
-        """
-        pass
+        time.sleep(1) # задержка выполнения в 1 секунду для демонстрации работы декоратора
+        if from_date and to_date:
+            return [drink for drink in self.drinks.values() if from_date <= drink.production_date <= to_date]
+        else:
+            return []
